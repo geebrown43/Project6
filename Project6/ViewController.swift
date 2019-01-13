@@ -50,22 +50,39 @@ class ViewController: UIViewController {
         
        let arr = [label1, label2, label3, label4, label5]
         
+        var previous: UILabel?
+        
         for value in arr {
             view.addSubview(value)
-        }
-        
-        let viewsDictionary: [String: UILabel] = ["label1": label1, "label2": label2, "label3": label3, "label4": label4, "label5": label5]
-        
-        for label in viewsDictionary.keys {
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[\(label)]|", options: [], metrics: nil, views: viewsDictionary))
+            value.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            value.heightAnchor.constraint(equalToConstant: 98).isActive = true
             
-            // addConstraints adds an array of constraints to our view controllers view
-            // NSLayoutConstraint.constraints(withVisualFormat:) is the Auto Layout method that converts VFL into an array of constraints
-            //"H:|[label}|" -- this string describes how we want the layout to look
-            //H: -- Horizontal Layout
-            // | -- means the edge of the View
+            if let previous = previous {
+                value.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
+            }
+            
+            previous = value
         }
+        
+        // Auto Layout VFL code --(Visual Format language)
+        
+//        let viewsDictionary: [String: UILabel] = ["label1": label1, "label2": label2, "label3": label3, "label4": label4, "label5": label5]
+//
+//        for label in viewsDictionary.keys {
+//            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[\(label)]|", options: [], metrics: nil, views: viewsDictionary))
+//
+//            // addConstraints adds an array of constraints to our view controllers view
+//            // NSLayoutConstraint.constraints(withVisualFormat:) is the Auto Layout method that converts VFL into an array of constraints
+//            //"H:|[label}|" -- this string describes how we want the layout to look
+//            //H: -- Horizontal Layout
+//            // | -- means the edge of the View
+//            // [label] -- visual way of saying "put label here"
+//        }
+//        let metrics = ["labelHeight": 88]
+//        view.addConstraints( NSLayoutConstraint.constraints(withVisualFormat: "V:|[label1(labelHeight@999)]-[label2(label1)]-[label3(label1)]-[label4(label1)]-[label5(label1)]-(>=10)-|", options: [], metrics: metrics, views: viewsDictionary))  // The - between [label] indicates 10 points by deefault --- the @999 determines the priority level so screen can adjust in landscape mode
        
+        
+        
     }
 
 
